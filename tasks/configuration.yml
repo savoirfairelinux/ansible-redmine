@@ -1,0 +1,10 @@
+---
+- name: Config / Ensure database
+  template:
+    src: templates/database.yml.j2
+    dest: /etc/redmine/default/database.yml
+
+- name: Config / Ensure outbound mail
+  template:
+    src: templates/configuration.yml.j2
+    dest: /etc/redmine/default/configuration.yml

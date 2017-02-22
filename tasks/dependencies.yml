@@ -1,0 +1,8 @@
+---
+- name: Dependencies / Installing
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - redmine
+    - redmine-pgsql

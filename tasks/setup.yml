@@ -1,0 +1,12 @@
+---
+- name: Setup / rake
+  command: "bin/rake {{ item }} chdir=/usr/share/redmine/"
+  with_items:
+    - db:migrate
+    - redmine:plugins:migrate
+    - assets:precompile
+    - tmp:clear
+  environment:
+    RAILS_ENV: "{{ redmine_rails_environment }}"
+  register: response
+  changed_when: response.stderr != ''

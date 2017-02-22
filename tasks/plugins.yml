@@ -1,0 +1,19 @@
+---
+- name: Plugins / Ensure plugins directory
+  file: path=/usr/share/redmine/plugins/ state=directory mode=0755
+
+- name: Plugins / Ensure enabled plugins present
+  with_items: "{{ redmine_plugins_enabled }}"
+  loop_control:
+    loop_var: plugin
+  include_role:
+    name: gitpush-deploy
+  vars:
+    gitpush_local_repo_path: "plugins/{{ plugin }}/.git/"
+    gitpush_repo_path: "/usr/share/redmine/plugins/{{ plugin }}/.git/"
+    gitpush_workdir_path: "/usr/share/redmine/plugins/{{ plugin }}/"
+
+- name: Plugins / Ensure dependencies
+  bundler:
+    state: present
+    chdir: /usr/share/redmine/plugins/
