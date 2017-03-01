@@ -5,6 +5,9 @@ redmine_rails_environment: production
 # redmine enabled plugins
 redmine_plugins_enabled: []
 
+# the username on which redmine will be ran
+redmine_username: redmine
+
 # redmine database configuration
 redmine_database_host: 127.0.0.1
 redmine_database_port: 5432

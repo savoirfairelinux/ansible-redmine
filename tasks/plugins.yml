@@ -9,7 +9,7 @@
   include_role:
     name: gitpush-deploy
   vars:
-    gitpush_local_repo_path: "plugins/{{ plugin }}/.git/"
+    gitpush_local_repo_path: "redmine_plugins/{{ plugin }}/.git/"
     gitpush_repo_path: "/usr/share/redmine/plugins/{{ plugin }}/.git/"
     gitpush_workdir_path: "/usr/share/redmine/plugins/{{ plugin }}/"
 
