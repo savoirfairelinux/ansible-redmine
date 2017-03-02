@@ -6,25 +6,14 @@
   with_items:
     - redmine
     - redmine-pgsql
+    - ruby-all-dev
+    - yard
+    - gcc
+    - g++
+    - libmagick++-dev
+    - cmake
 
-- name: Dependencies / Ensure Redmine system user
-  user:
-    name: "{{ redmine_username }}"
-    group: "{{ redmine_username }}"
-    system: true
-    home: /var/lib/redmine/
-
-- name: Dependencies / Ensure permissions over config directory
-  file:
-    path: /etc/redmine/default/
-    owner: "{{ redmine_username }}"
-    group: "{{ redmine_username }}"
-    recurse: true
-
-- name: Dependencies / Ensure permissions over storage directory
-  file:
-    path: /var/lib/redmine/default/
-    owner: "{{ redmine_username }}"
-    group: "{{ redmine_username }}"
-    mode: "u+rwX,g+rwX,o-rwX"
-    recurse: true
+- name: Dependencies / Ensure latest version of Rake
+  gem:
+    name: rake
+    state: latest

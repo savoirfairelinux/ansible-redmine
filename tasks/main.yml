@@ -1,6 +1,8 @@
 ---
 - include: tasks/dependencies.yml
 
+- include: tasks/permissions.yml
+
 - include: tasks/database.yml
   become: true
   become_user: postgres

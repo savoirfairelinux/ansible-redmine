@@ -21,7 +21,17 @@ redmine_mail_smtp_enable: false
 redmine_mail_smtp_host: null
 redmine_mail_smtp_port: null
 redmine_mail_smtp_starttls: false # true or false
-redmine_mail_smtp_authentication: false # cram_md5, login, plain or null
+redmine_mail_smtp_authentication: null # cram_md5, login, plain or null
 redmine_mail_smtp_domain: null
 redmine_mail_smtp_username: null
 redmine_mail_smtp_password: null
+
+# redmine inbound mail configuration
+redmine_mail_pop3_enable: false
+redmine_mail_pop3_host: null
+redmine_mail_pop3_port: null
+redmine_mail_pop3_username: null
+redmine_mail_pop3_password: null
+redmine_mail_pop3_apop: false # true or false
+redmine_mail_pop3_ssl: false # true or false
+redmine_mail_pop3_refresh_minutes: 1

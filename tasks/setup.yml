@@ -9,4 +9,24 @@
   environment:
     RAILS_ENV: "{{ redmine_rails_environment }}"
   register: response
-  changed_when: response.stderr != ''
+  changed_when: response.stdout not in ['rubycritic failed.', '']
+  notify: appserver reload
+
+- name: Setup / inbound mail cronjob
+  cron:
+    name: inbound mail
+    user: "{{ redmine_username }}"
+    minute: "*/{{ redmine_mail_pop3_refresh_minutes }}"
+    job: >
+      cd /usr/share/redmine/ &&
+      /usr/share/redmine/bin/rake
+      redmine:email:receive_pop3
+      RAILS_ENV=development
+      host="{{ redmine_mail_pop3_host }}"
+      port="{{ redmine_mail_pop3_port }}"
+      username="{{ redmine_mail_pop3_username }}"
+      password="{{ redmine_mail_pop3_password }}"
+      apop={{ redmine_mail_pop3_apop|bool()|lower }}
+      ssl={{ redmine_mail_pop3_ssl|bool()|lower }}
+      >> /dev/null
+  when: "{{ redmine_mail_pop3_enable }}"

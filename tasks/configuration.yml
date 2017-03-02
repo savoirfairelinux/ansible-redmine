@@ -3,8 +3,16 @@
   template:
     src: templates/database.yml.j2
     dest: /etc/redmine/default/database.yml
+  notify: appserver reload
 
-- name: Config / Ensure outbound mail
+- name: Config / Ensure globals
   template:
     src: templates/configuration.yml.j2
     dest: /etc/redmine/default/configuration.yml
+  notify: appserver reload
+
+- name: Config / Make clean symlink to Redmine's path
+  file:
+    src: /etc/redmine/default/configuration.yml
+    dest: /usr/share/redmine/config/configuration.yml
+    state: link

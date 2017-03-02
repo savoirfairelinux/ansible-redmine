@@ -1,0 +1,37 @@
+---
+- name: Dependencies / Ensure Redmine group
+  group:
+    name: redmine
+    state: present
+
+- name: Dependencies / Ensure Redmine system user
+  user:
+    name: "{{ redmine_username }}"
+    groups: "{{ redmine_username }},crontab"
+    system: true
+    append: true
+    home: /var/lib/redmine/
+  notify: appserver reload
+
+- name: Dependencies / Ensure correct recursive mod & owner over directories
+  file:
+    path: "{{ item }}"
+    owner: "{{ redmine_username }}"
+    group: "{{ redmine_username }}"
+    mode: "u+rwX,g+rwX,o-rwX"
+    recurse: true
+  with_items:
+    - /var/lib/redmine/default/files/
+    - /etc/redmine/default/
+  notify: appserver reload
+
+- name: Dependencies / Ensure correct non-recursive owner over files
+  file:
+    path: "{{ item }}"
+    owner: "{{ redmine_username }}"
+    group: "{{ redmine_username }}"
+  with_items:
+    - /var/cache/redmine/default/
+    - /var/lib/redmine/Gemfile.lock
+    - /var/lib/redmine/
+  notify: appserver reload

@@ -12,8 +12,18 @@
     gitpush_local_repo_path: "redmine_plugins/{{ plugin }}/.git/"
     gitpush_repo_path: "/usr/share/redmine/plugins/{{ plugin }}/.git/"
     gitpush_workdir_path: "/usr/share/redmine/plugins/{{ plugin }}/"
+  notify: appserver reload
 
-- name: Plugins / Ensure dependencies
+- name: Plugins / Ensure required gems
   bundler:
     state: present
-    chdir: /usr/share/redmine/plugins/
+    chdir: /usr/share/redmine/
+  notify: appserver reload
+
+- name: Plugins / Make Redmine user owner of plugins files
+  file:
+    path: "/usr/share/redmine/plugins/"
+    owner: "{{ redmine_username }}"
+    group: "{{ redmine_username }}"
+    recurse: true
+  notify: appserver reload
