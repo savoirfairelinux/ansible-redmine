@@ -11,4 +11,6 @@
 
 - include: tasks/plugins.yml
 
+- include: tasks/themes.yml
+
 - include: tasks/setup.yml
