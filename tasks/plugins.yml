@@ -1,6 +1,9 @@
 ---
 - name: Plugins / Ensure plugins directory
-  file: path=/usr/share/redmine/plugins/ state=directory mode=0755
+  file:
+    path: /usr/share/redmine/plugins/
+    state: directory
+    mode: 0755
 
 - name: Plugins / Ensure enabled plugins present
   with_items: "{{ redmine_plugins_enabled }}"
@@ -12,6 +15,7 @@
     gitpush_local_repo_path: "redmine_plugins/{{ plugin }}/.git/"
     gitpush_repo_path: "/usr/share/redmine/plugins/{{ plugin }}/.git/"
     gitpush_workdir_path: "/usr/share/redmine/plugins/{{ plugin }}/"
+    ansible_user: root
   notify: appserver reload
 
 - name: Plugins / Ensure required gems
@@ -20,7 +24,7 @@
     chdir: /usr/share/redmine/
   notify: appserver reload
 
-- name: Plugins / Make Redmine user owner of plugins files
+- name: Plugins / Ensure Redmine user owner of plugins files
   file:
     path: "/usr/share/redmine/plugins/"
     owner: "{{ redmine_username }}"
