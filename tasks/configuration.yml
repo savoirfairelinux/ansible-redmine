@@ -2,17 +2,17 @@
 - name: Config / Ensure database
   template:
     src: templates/database.yml.j2
-    dest: /etc/redmine/default/database.yml
+    dest: "{{ config_path }}/database.yml"
   notify: appserver reload
 
 - name: Config / Ensure globals
   template:
     src: templates/configuration.yml.j2
-    dest: /etc/redmine/default/configuration.yml
+    dest: "{{ config_path }}/configuration.yml"
   notify: appserver reload
 
 - name: Config / Make clean symlink to Redmine's path
   file:
-    src: /etc/redmine/default/configuration.yml
-    dest: /usr/share/redmine/config/configuration.yml
+    src: "{{ config_path }}/configuration.yml"
+    dest: "{{ source_path }}/config/configuration.yml"
     state: link

@@ -2,6 +2,6 @@
 - name: Themes / Ensure themes from repositories
   git:
     repo: "{{ item.repo }}"
-    dest: "/usr/share/redmine/public/themes/{{ item.name }}/"
+    dest: "{{ source_path }}/public/themes/{{ item.name }}/"
   with_items: "{{ redmine_themes_repositories }}"
   notify: appserver reload

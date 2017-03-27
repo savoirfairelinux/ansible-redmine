@@ -1,4 +1,6 @@
 ---
+- include_vars: "distros/{{ ansible_distribution }}_{{ ansible_distribution_release }}.yml"
+
 - include: tasks/dependencies.yml
 
 - include: tasks/permissions.yml

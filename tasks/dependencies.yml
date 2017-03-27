@@ -3,15 +3,7 @@
   apt:
     name: "{{ item }}"
     state: present
-  with_items:
-    - redmine
-    - redmine-pgsql
-    - ruby-all-dev
-    - yard
-    - gcc
-    - g++
-    - libmagick++-dev
-    - cmake
+  with_items: "{{ required_packages }}"
 
 - name: Dependencies / Ensure latest version of Rake
   gem:

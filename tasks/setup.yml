@@ -1,6 +1,6 @@
 ---
 - name: Setup / rake
-  command: "bin/rake {{ item }} chdir=/usr/share/redmine/"
+  command: "bin/rake {{ item }} chdir={{ source_path }}"
   with_items:
     - db:migrate
     - redmine:plugins:migrate
@@ -18,10 +18,10 @@
     user: "{{ redmine_username }}"
     minute: "*/{{ redmine_mail_pop3_refresh_minutes }}"
     job: >
-      cd /usr/share/redmine/ &&
-      /usr/share/redmine/bin/rake
+      cd {{ source_path }} &&
+      {{ source_path }}/bin/rake
       redmine:email:receive_pop3
-      RAILS_ENV=development
+      RAILS_ENV={{ redmine_rails_environment }}
       host="{{ redmine_mail_pop3_host }}"
       port="{{ redmine_mail_pop3_port }}"
       username="{{ redmine_mail_pop3_username }}"
