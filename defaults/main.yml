@@ -1,0 +1,40 @@
+---
+# rails environment : 'production' or 'development'
+redmine_rails_environment: production
+
+# redmine enabled plugins
+redmine_plugins_enabled: []
+
+# the username on which redmine will be ran
+redmine_username: redmine
+
+# redmine database configuration
+redmine_database_host: 127.0.0.1
+redmine_database_port: 5432
+redmine_database_schema: redmine
+redmine_database_username: redmine
+redmine_database_password: whatever
+redmine_database_encoding: utf8
+
+# redmine email delivery configuration
+redmine_mail_smtp_enable: false
+redmine_mail_smtp_host: null
+redmine_mail_smtp_port: null
+redmine_mail_smtp_starttls: false # true or false
+redmine_mail_smtp_authentication: null # cram_md5, login, plain or null
+redmine_mail_smtp_domain: null
+redmine_mail_smtp_username: null
+redmine_mail_smtp_password: null
+
+# redmine inbound mail configuration
+redmine_mail_pop3_enable: false
+redmine_mail_pop3_host: null
+redmine_mail_pop3_port: null
+redmine_mail_pop3_username: null
+redmine_mail_pop3_password: null
+redmine_mail_pop3_apop: false # true or false
+redmine_mail_pop3_ssl: false # true or false
+redmine_mail_pop3_refresh_minutes: 1
+
+# repositories of themes
+redmine_themes_repositories: []

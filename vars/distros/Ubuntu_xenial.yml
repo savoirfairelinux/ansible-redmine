@@ -1,0 +1,16 @@
+config_path: /etc/redmine/default/
+source_path: /usr/share/redmine/
+cache_path: /var/cache/redmine/default/
+home_path: /var/lib/redmine/
+storage_path: "{{ home_path }}/default/files/"
+gemfile_lock_path: "{{ home_path }}/Gemfile.lock"
+
+required_packages:
+  - redmine
+  - redmine-pgsql
+  - ruby-all-dev
+  - yard
+  - gcc
+  - g++
+  - libmagick++-dev
+  - cmake

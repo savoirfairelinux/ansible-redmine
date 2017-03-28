@@ -1,0 +1,33 @@
+---
+- name: Plugins / Ensure plugins directory
+  file:
+    path: "{{ source_path }}/plugins/"
+    state: directory
+    mode: 0755
+
+- name: Plugins / Ensure enabled plugins present
+  with_items: "{{ redmine_plugins_enabled }}"
+  loop_control:
+    loop_var: plugin
+  include_role:
+    name: gitpush-deploy
+  vars:
+    gitpush_local_repo_path: "redmine_plugins/{{ plugin }}/.git/"
+    gitpush_repo_path: "{{ source_path }}/plugins/{{ plugin }}/.git/"
+    gitpush_workdir_path: "{{ source_path }}/plugins/{{ plugin }}/"
+    ansible_user: root
+  notify: appserver reload
+
+- name: Plugins / Ensure required gems
+  bundler:
+    state: present
+    chdir: "{{ source_path }}"
+  notify: appserver reload
+
+- name: Plugins / Ensure Redmine user owner of plugins files
+  file:
+    path: "{{ source_path }}/plugins/"
+    owner: "{{ redmine_username }}"
+    group: "{{ redmine_username }}"
+    recurse: true
+  notify: appserver reload
