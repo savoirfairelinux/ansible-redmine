@@ -1,10 +1,10 @@
 ---
-- name: Dependencies / Ensure Redmine group
+- name: Permissions / Ensure Redmine group
   group:
     name: "{{ redmine_username }}"
     state: present
 
-- name: Dependencies / Ensure Redmine system user
+- name: Permissions / Ensure Redmine system user
   user:
     name: "{{ redmine_username }}"
     groups: "{{ redmine_username }},crontab"
@@ -13,7 +13,7 @@
     home: "{{ home_path }}"
   notify: appserver reload
 
-- name: Dependencies / Ensure correct recursive mod & owner over directories
+- name: Permissions / Ensure correct recursive mod & owner over directories
   file:
     path: "{{ item }}"
     owner: "{{ redmine_username }}"
@@ -25,7 +25,7 @@
     - "{{ config_path }}"
   notify: appserver reload
 
-- name: Dependencies / Ensure correct non-recursive owner over files
+- name: Permissions / Ensure correct non-recursive owner over files
   file:
     path: "{{ item }}"
     owner: "{{ redmine_username }}"
