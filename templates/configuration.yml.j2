@@ -3,7 +3,7 @@
   {% else %}
 
     delivery_method: :async_smtp
-    smtp_settings:
+    async_smtp_settings:
       enable_starttls_auto: {{ redmine_mail_smtp_starttls|bool()|lower }}
       address: {{ redmine_mail_smtp_host }}
       port: {{ redmine_mail_smtp_port }}
