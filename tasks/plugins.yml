@@ -5,6 +5,19 @@
     state: directory
     mode: 0755
 
+- name: Plugins / Getting list of currently installed
+  shell: "ls -1 {{ source_path }}/plugins/"
+  register: redmine_plugins_installed
+  changed_when: false
+
+- name: Plugins / Ensure absence of unused plugins
+  file:
+    path: "{{ source_path }}/plugins/{{ item }}/"
+    state: absent
+  with_items: "{{ redmine_plugins_installed.stdout_lines }}"
+  when: item not in redmine_plugins_enabled
+  notify: appserver reload
+
 - name: Plugins / Ensure enabled plugins present
   with_items: "{{ redmine_plugins_enabled }}"
   loop_control:

@@ -1,4 +1,17 @@
 ---
+- name: Themes / Getting list of currently installed
+  shell: "ls -1 {{ source_path }}/public/themes/"
+  register: redmine_themes_installed
+  changed_when: false
+
+- name: Themes / Ensure absence of unused themes
+  file:
+    path: "{{ source_path }}/public/themes/{{ item }}/"
+    state: absent
+  with_items: "{{ redmine_themes_installed.stdout_lines|difference(['alternate', 'classic', 'README']) }}"
+  when: item not in redmine_themes_repositories|map(attribute='name')
+  notify: appserver reload
+
 - name: Themes / Ensure themes from repositories
   git:
     repo: "{{ item.repo }}"
